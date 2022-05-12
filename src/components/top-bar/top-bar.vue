@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
+let meta = new URL(`../../assets/meta.jpg`, import.meta.url).href
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll, true)
 })
@@ -29,9 +31,13 @@ function handleScroll() {
   <div id="top-bar" :class="showBar ? 'up' : 'down'">
     <div id="top-bar-div">
       <div id="left">
-        <h1>Storage<span style="color: var(--color-purple)">Scan</span></h1>
+        <img :src="meta" />
+        <a id="app-name" href="#">
+          Storage<span style="color: var(--color-purple)">Scan</span>
+        </a>
       </div>
       <div id="right">
+        <a href="#how-to-use">How to use?</a>
         <a href="#what-is-this">What is this?</a>
         <a href="#how-it-work">How is works?</a>
         <a href="https://twitter.com/@lianyanshe" target="_blank"
@@ -87,7 +93,7 @@ function handleScroll() {
   width: 85%;
 }
 
-h1 {
+#app-name {
   font-size: 48px;
 }
 
@@ -105,6 +111,19 @@ i {
 
   &:hover {
     color: var(--color-purple);
+  }
+}
+
+#left {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  img {
+    width: 60px;
+    height: 60px;
+    margin-left: 40px;
+    border-radius: 15px;
   }
 }
 

@@ -45,6 +45,7 @@ span {
   margin-left: 40px;
   border: 2px solid var(--color-text);
   transition: 0.3s;
+  border-radius: 20px;
   color: var(--color-radio);
   &:hover {
     color: var(--color-purple);
@@ -54,7 +55,6 @@ span {
 
 .active {
   color: var(--color-purple);
-  border-radius: 20px;
   border: 2px solid var(--color-purple);
 }
 </style>

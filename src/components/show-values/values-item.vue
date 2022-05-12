@@ -56,7 +56,7 @@ let placeholder = '["key"] or [index]'
         <span class="name">{{ name }}</span> : {{ type }}
       </p>
       <input
-        v-if="type === 'mapping' || type === 'array' || type === 'slice'"
+        v-if="type === 'mapping' || type === 'struct' || type === 'slice'"
         v-model="keyOrIndex"
         class="sc-input"
         :placeholder="placeholder"
