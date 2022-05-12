@@ -4,6 +4,7 @@ import { useStore } from '@/store'
 import emitter from '@/emitter'
 import { ref } from 'vue'
 import notyf from '@/notyf'
+import { ScButton } from '../sc-button'
 
 const store = useStore()
 
@@ -16,14 +17,14 @@ let prop = defineProps({
 })
 
 let keyOrIndex = ref('')
-let disable = ref(false)
+let loading = ref(false)
 
-emitter.on('disableValueButton', (val) => {
-  disable.value = val
+emitter.on('getValueing', (val) => {
+  loading.value = val
 })
 
 function getValue() {
-  emitter.emit('disableValueButton', true)
+  emitter.emit('getValueing', true)
   store.setCurrValueName(prop.name)
   let _name = prop.name
   if (keyOrIndex.value !== '') {
@@ -31,14 +32,17 @@ function getValue() {
   }
   Api.getValue(store.chain, store.address, _name)
     .then((res) => {
-      emitter.emit('getValue', res.data)
+      emitter.emit('getValue', {
+        name: `${prop.name}${keyOrIndex.value}`,
+        value: res.data,
+      })
     })
     .catch((err) => {
       notyf.error(err.message)
       console.log(err)
     })
     .finally(() => {
-      emitter.emit('disableValueButton', false)
+      emitter.emit('getValueing', false)
     })
 }
 
@@ -52,23 +56,16 @@ let placeholder = '["key"] or [index]'
         <span class="name">{{ name }}</span> : {{ type }}
       </p>
       <input
-        v-if="type === 'mapping'"
+        v-if="type === 'mapping' || type === 'array' || type === 'slice'"
         v-model="keyOrIndex"
         class="sc-input"
         :placeholder="placeholder"
       />
     </div>
     <div style="display: flex; justify-content: center; align-items: center">
-      <button
-        :class="
-          disable
-            ? 'sc-button btn-loading get-value-btn'
-            : 'sc-button get-value-btn'
-        "
-        @click="getValue()"
-      >
+      <ScButton class="get-value-btn" :loading="loading" @click="getValue()">
         Value
-      </button>
+      </ScButton>
     </div>
   </div>
 </template>

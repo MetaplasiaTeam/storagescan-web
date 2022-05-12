@@ -5,11 +5,13 @@ import emitter from '@/emitter'
 import { useStore } from '@/store'
 import { RadioGroup } from '../radio-group'
 import notyf from '@/notyf'
+import { ScButton } from '../sc-button'
 
 const store = useStore()
 
 let chain = ref('eth')
 let address = ref('')
+let loading = ref(false)
 
 let chains = [
   { name: 'Eth', key: 'eth' },
@@ -29,6 +31,7 @@ function getContractVariables() {
     notyf.error('Please enter an address')
     return
   }
+  loading.value = true
   Api.getContracts(chain.value, address.value)
     .then((res) => {
       console.log(res)
@@ -37,6 +40,9 @@ function getContractVariables() {
     .catch((err) => {
       notyf.error(err.message)
       console.log(err)
+    })
+    .finally(() => {
+      loading.value = false
     })
 }
 
@@ -63,9 +69,11 @@ function onChainChange(val: string) {
         <input v-model="address" class="sc-input" />
       </div>
     </div>
-    <div>
-      <button class="sc-button" @click="address = ''">Clear</button
-      ><button class="sc-button" @click="getContractVariables()">Submit</button>
+    <div style="display: flex">
+      <ScButton :outlined="true" @click="address = ''">Clear</ScButton
+      ><ScButton :loading="loading" @click="getContractVariables()"
+        >Submit</ScButton
+      >
     </div>
   </div>
 </template>

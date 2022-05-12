@@ -43,9 +43,9 @@ function clickItem(item: any) {
 span {
   padding: 5px 15px;
   margin-left: 40px;
-  border: 2px solid #0e0e0e20;
+  border: 2px solid var(--color-text);
   transition: 0.3s;
-  color: #0e0e0e80;
+  color: var(--color-radio);
   &:hover {
     color: var(--color-purple);
     cursor: pointer;

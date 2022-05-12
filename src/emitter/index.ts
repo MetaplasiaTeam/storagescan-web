@@ -3,8 +3,8 @@ import mitt from 'mitt'
 
 type Events = {
   getContract: ContractsResponse
-  getValue: string
-  disableValueButton: boolean
+  getValue: { name: String; value: String }
+  getValueing: boolean
 }
 
 const emitter = mitt<Events>()

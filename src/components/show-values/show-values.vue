@@ -13,14 +13,6 @@ emitter.on('getContract', (val) => {
   contract.value = val
   show.value = true
 })
-
-emitter.on('getValue', (val) => {
-  value.value = val
-})
-
-emitter.on('disableValueButton', (val) => {
-  loadingValue.value = val
-})
 </script>
 
 <template>
@@ -33,8 +25,6 @@ emitter.on('disableValueButton', (val) => {
         :type="item.type"
       ></ValuesItem>
     </div>
-    <div v-if="loadingValue" class="loading"></div>
-    <textarea v-model="value" />
   </div>
 </template>
 
@@ -43,8 +33,8 @@ emitter.on('disableValueButton', (val) => {
   width: 80%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   align-self: center;
   margin-top: 60px;
 }
@@ -52,6 +42,10 @@ emitter.on('disableValueButton', (val) => {
 textarea {
   width: 500px;
   height: 500px;
+}
+
+#values {
+  width: 90%;
 }
 
 @media screen and (max-width: 768px) {

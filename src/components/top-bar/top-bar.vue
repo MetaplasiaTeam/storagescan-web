@@ -56,7 +56,7 @@ function handleScroll() {
   padding-bottom: 28px;
   justify-content: center;
   width: 100%;
-  background-color: #f2f6fa;
+  background-color: var(--color-body-background);
   transition: 0.2s;
 
   &.up {
@@ -68,13 +68,13 @@ function handleScroll() {
   &.down {
     padding-top: 18px;
     padding-bottom: 18px;
-    background-color: #f2f6fa80;
+    background-color: var(--color-head-down-blink);
     backdrop-filter: blur(10px);
   }
 
   @-moz-document url-prefix() {
     &.down {
-      background-color: #f2f6fad8;
+      background-color: var(--color-head-down-gecko);
     }
   }
 }
@@ -92,7 +92,7 @@ h1 {
 }
 
 a {
-  color: #000;
+  color: var(--color-text);
   text-decoration: none;
 }
 

@@ -38,7 +38,7 @@ watch(show, (val) => {
 .code-item {
   margin-top: 40px;
   margin-bottom: 40px;
-  background-color: #fafafa;
+  background-color: var(--color-card-background);
   width: 80%;
   overflow: hidden;
 }

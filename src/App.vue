@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useWindowSize } from '@vueuse/core'
+import { ref, watch } from 'vue'
 import {
   TopBar,
   EnterAddress,
@@ -6,6 +8,37 @@ import {
   ShowCode,
   SubBord,
 } from './components'
+import emitter from './emitter'
+import { useDark } from '@vueuse/core'
+
+const isDark = useDark()
+const { width } = useWindowSize()
+
+watch(isDark, (val) => {
+  if (val) {
+    import('highlight.js/styles/atom-one-dark.css')
+  } else {
+    import('highlight.js/styles/atom-one-light.css')
+  }
+})
+
+let showValueCard = ref(true)
+let valueCardRight = ref(width.value > 768 ? '40px' : '0px')
+let iconRotate = ref('0deg')
+
+let valueData = ref<{ name: String; value: String }>()
+
+watch(showValueCard, (val) => {
+  valueCardRight.value = val ? '40px' : '-500px'
+  iconRotate.value = val ? '0deg' : '180deg'
+  if (width.value < 768) {
+    valueCardRight.value = val ? '0px' : '-230px'
+  }
+})
+
+emitter.on('getValue', (val) => {
+  valueData.value = val
+})
 </script>
 
 <template>
@@ -36,6 +69,17 @@ import {
       >metaplasia.io</a
     >
   </p>
+  <div class="card" id="show-value-card">
+    <i
+      @click="showValueCard = !showValueCard"
+      id="close-or-open-show-value-card"
+      class="fa-solid fa-angle-right"
+    ></i>
+    <div id="show-value-card-content">
+      <p id="title">Value is here</p>
+      <p id="value">{{ valueData?.name }} is {{ valueData?.value }}</p>
+    </div>
+  </div>
 </template>
 
 <style lang="scss">
@@ -55,12 +99,60 @@ import {
 }
 
 #link-to-meta {
-  color: #000;
+  color: var(--color-link);
   text-decoration: none;
   font-weight: bold;
 }
 
 .notyf {
   font-size: 24px;
+}
+
+#show-value-card {
+  width: 500px;
+  height: 300px;
+  position: fixed;
+  bottom: 40px;
+  transition: 0.3s;
+  right: v-bind(valueCardRight);
+
+  #title {
+    font-size: 38px;
+    font-weight: bold;
+  }
+
+  #value {
+    font-size: 24px;
+    margin-top: 40px;
+    word-wrap: break-word;
+  }
+
+  overflow: hidden;
+}
+
+#show-value-card-content {
+  height: 100%;
+  overflow-y: auto;
+}
+
+#close-or-open-show-value-card {
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  left: 40px;
+  font-size: 40px;
+  transition: 0.3s;
+  transform: rotate(v-bind(iconRotate));
+}
+
+@media screen and (max-width: 768px) {
+  #show-value-card {
+    width: 300px;
+    height: 300px;
+    bottom: 40px;
+    border-radius: 0px;
+    bottom: 0px;
+    left: rotate(v-bind(iconRotate));
+  }
 }
 </style>
