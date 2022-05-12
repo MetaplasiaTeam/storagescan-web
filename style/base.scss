@@ -1,0 +1,117 @@
+:root {
+  --color-purple: #7948ea;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f2f6fa;
+}
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin button-hover {
+  transition: 0.3s;
+  &:hover {
+    filter: drop-shadow(0 0 30px rgba(121, 72, 234, 0.3));
+  }
+}
+
+@mixin button-active {
+  &:active {
+    transform: translateY(8px);
+  }
+}
+
+@mixin card-shadow {
+  box-shadow: 0px 0.9px 1.6px rgba(0, 0, 0, 0.01),
+    0px 1.9px 3.6px rgba(0, 0, 0, 0.014), 0px 3.4px 6.3px rgba(0, 0, 0, 0.017),
+    0px 5.4px 10px rgba(0, 0, 0, 0.02), 0px 8.3px 15.5px rgba(0, 0, 0, 0.023),
+    0px 13px 24.1px rgba(0, 0, 0, 0.026), 0px 21.5px 40px rgba(0, 0, 0, 0.03),
+    0px 43px 80px rgba(0, 0, 0, 0.04);
+}
+
+.sc-button {
+  cursor: pointer;
+  width: 229px;
+  height: 81px;
+  margin-right: 40px;
+  background-color: var(--color-purple);
+  color: #fff;
+  border-radius: 25px;
+  border-style: none;
+  font-size: 38px;
+  box-shadow: 0.6px 1.7px 2.2px rgba(121, 72, 234, 0.02),
+    1.3px 4.1px 5.3px rgba(121, 72, 234, 0.028),
+    2.5px 7.8px 10px rgba(121, 72, 234, 0.035),
+    4.5px 13.8px 17.9px rgba(121, 72, 234, 0.042),
+    8.4px 25.9px 33.4px rgba(121, 72, 234, 0.05),
+    20px 62px 80px rgba(121, 72, 234, 0.07);
+  @include button-hover;
+  @include button-active;
+
+  &.btn-loading {
+    pointer-events: none;
+    background-color: #e6e6e6;
+    color: #2c3e50;
+    box-shadow: 0.6px 1.7px 2.2px rgba(0, 0, 0, 0.02),
+      1.3px 4.1px 5.3px rgba(0, 0, 0, 0.028),
+      2.5px 7.8px 10px rgba(0, 0, 0, 0.035),
+      4.5px 13.8px 17.9px rgba(0, 0, 0, 0.042),
+      8.4px 25.9px 33.4px rgba(0, 0, 0, 0.05),
+      20px 62px 80px rgba(0, 0, 0, 0.07);
+  }
+}
+
+.sc-input {
+  background: transparent;
+  border: 1px solid #000;
+  border-radius: 30px;
+  text-align: center;
+
+  &:focus {
+    outline: 4px solid var(--color-purple);
+    border-radius: 2rem;
+  }
+}
+
+.card {
+  background-color: #fff;
+  padding: 60px;
+  border-radius: 30px;
+  @include card-shadow;
+}
+
+.loading {
+  width: 30px;
+  height: 30px;
+  border: 3px solid var(--color-purple);
+  border-top-color: transparent;
+  border-radius: 100%;
+
+  animation: circle infinite 0.75s linear;
+}
+
+@keyframes circle {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
