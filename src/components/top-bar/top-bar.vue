@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
-let meta = new URL(`../../assets/meta.jpg`, import.meta.url).href
+const meta = new URL(`../../assets/meta.jpg`, import.meta.url).href
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll, true)
 })
 
 let i = 0
-let showBar = ref(true)
+const showBar = ref(true)
 
 function handleScroll() {
   var scrollTop =

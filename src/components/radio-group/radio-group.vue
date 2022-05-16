@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-let prop = defineProps({
+const prop = defineProps({
   items: {
     type: Object,
     default: () => [{ name: '', key: '' }],
@@ -14,7 +14,7 @@ let prop = defineProps({
 
 const emit = defineEmits(['handleClickItem'])
 
-let _currItemName = ref(prop.currItemName)
+const _currItemName = ref(prop.currItemName)
 
 function clickItem(item: any) {
   _currItemName.value = item.name

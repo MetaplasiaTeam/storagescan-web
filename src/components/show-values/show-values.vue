@@ -4,10 +4,10 @@ import emitter from '@/emitter'
 import ContractsResponse from '@/types/contracts-response'
 import { ref } from 'vue'
 
-let contract = ref<ContractsResponse>()
-let value = ref('')
-let show = ref(false)
-let loadingValue = ref(false)
+const contract = ref<ContractsResponse>()
+const value = ref('')
+const show = ref(false)
+const loadingValue = ref(false)
 
 emitter.on('getContract', (val) => {
   contract.value = val

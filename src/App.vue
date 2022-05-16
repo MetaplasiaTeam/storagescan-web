@@ -24,20 +24,25 @@ watch(isDark, (val) => {
   }
 })
 
-let showValueCard = ref(true)
-let iconRotate = ref('0deg')
+let first = true
+const showValueCard = ref(false)
+const iconRotate = ref('180deg')
 
-let valueData = ref<{ name: String; value: String }>()
+const valueData = ref<{ name: String; value: String }>()
 
 watch(showValueCard, (val) => {
   iconRotate.value = val ? '0deg' : '180deg'
 })
 
 emitter.on('getValue', (val) => {
+  if (first) {
+    first = false
+    showValueCard.value = true
+  }
   valueData.value = val
 })
 
-let code = `
+const code = `
 contract test {
     // slice type
     []uint256 public a;
@@ -127,9 +132,9 @@ contract test {
       class="fa-solid fa-angle-right"
     ></i>
     <div id="show-value-card-content">
-      <p id="title">Value is here</p>
+      <p id="title">Value in here</p>
       <p v-if="valueData !== undefined" id="value">
-        {{ valueData?.name }} is {{ valueData?.value }}
+        {{ valueData?.value }}
       </p>
     </div>
   </div>

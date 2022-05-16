@@ -4,10 +4,10 @@ import { ref } from 'vue'
 import ContractsResponse from '@/types/contracts-response'
 import CodeItem from './code-item.vue'
 
-let contract = ref<ContractsResponse>()
-let show = ref(false)
-let titles = ref<Array<string>>([])
-let codes = ref<Array<string>>([])
+const contract = ref<ContractsResponse>()
+const show = ref(false)
+const titles = ref<Array<string>>([])
+const codes = ref<Array<string>>([])
 
 emitter.on('getContract', (val) => {
   titles.value = []
@@ -18,13 +18,13 @@ emitter.on('getContract', (val) => {
 })
 
 function flatContract() {
-  let map = contract?.value?.codes
+  const map = contract?.value?.codes
   titles.value.push(...Object.keys(map!))
   codes.value.push(...Object.values(map!))
   titles.value.forEach((ele, index) => {
     if (ele === contract.value?.main_contract) {
-      let tempTitle = titles.value[index]
-      let tempCode = codes.value[index]
+      const tempTitle = titles.value[index]
+      const tempCode = codes.value[index]
       titles.value.splice(index, 1)
       codes.value.splice(index, 1)
       titles.value.unshift(tempTitle)

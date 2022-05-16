@@ -2,13 +2,13 @@
 import { Api } from '@/net'
 import { useStore } from '@/store'
 import emitter from '@/emitter'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import notyf from '@/notyf'
 import { ScButton } from '../sc-button'
 
 const store = useStore()
 
-let prop = defineProps({
+const prop = defineProps({
   name: {
     type: String,
     default: '',
@@ -16,8 +16,8 @@ let prop = defineProps({
   type: String,
 })
 
-let keyOrIndex = ref('')
-let loading = ref(false)
+const keyOrIndex = ref('')
+const loading = ref(false)
 
 emitter.on('getValueing', (val) => {
   loading.value = val
@@ -46,7 +46,19 @@ function getValue() {
     })
 }
 
-let placeholder = '["key"] or [index]'
+let placeholder = ref('["key"] or [index]')
+
+onMounted(() => {
+  if (prop.type === 'slice') {
+    placeholder.value = '[index]'
+  }
+  if (prop.type === 'mapping') {
+    placeholder.value = '["key"]'
+  }
+  if (prop.type === 'struct') {
+    placeholder.value = '.id or .value'
+  }
+})
 </script>
 
 <template>
@@ -58,8 +70,9 @@ let placeholder = '["key"] or [index]'
       <input
         v-if="type === 'mapping' || type === 'struct' || type === 'slice'"
         v-model="keyOrIndex"
-        class="sc-input"
+        class="value-input"
         :placeholder="placeholder"
+        @keyup.enter="getValue()"
       />
     </div>
     <div style="display: flex; justify-content: center; align-items: center">
@@ -80,13 +93,42 @@ let placeholder = '["key"] or [index]'
 
 .value-left {
   display: flex;
+  width: 100%;
   align-items: center;
 }
 
-input {
-  margin-left: 20px;
+.input-div {
   height: 30px;
-  width: 200px;
+  position: relative;
+  span {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+  }
+}
+
+.value-input {
+  margin-left: 20px;
+  height: 100%;
+  width: 100%;
+  display: inline-block;
+  background: transparent;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid var(--color-text);
+  transition: 0.3s;
+  left: 0;
+  top: 0;
+
+  &:focus {
+    outline: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 4px solid var(--color-purple);
+  }
 }
 
 .name {
@@ -95,6 +137,7 @@ input {
 
 .type {
   font-size: 36px;
+  white-space: nowrap;
 }
 
 .get-value-btn {

@@ -9,11 +9,11 @@ import { ScButton } from '../sc-button'
 
 const store = useStore()
 
-let chain = ref('eth')
-let address = ref('')
-let loading = ref(false)
+const chain = ref('eth')
+const address = ref('')
+const loading = ref(false)
 
-let chains = [
+const chains = [
   { name: 'Eth', key: 'eth' },
   { name: 'Bsc', key: 'bsc' },
 ]
@@ -66,7 +66,11 @@ function onChainChange(val: string) {
       </div>
       <div id="address">
         Address
-        <input v-model="address" class="sc-input" />
+        <input
+          @keyup.enter="getContractVariables()"
+          v-model="address"
+          class="sc-input"
+        />
       </div>
     </div>
     <div style="display: flex">
