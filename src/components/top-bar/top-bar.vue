@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
-const meta = new URL(`../../assets/meta.jpg`, import.meta.url).href
+const meta = new URL(`../../assets/icon.webp`, import.meta.url).href
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll, true)

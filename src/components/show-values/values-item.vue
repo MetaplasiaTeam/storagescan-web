@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Api } from '@/net'
+import { api } from '@/common'
 import { useStore } from '@/store'
 import emitter from '@/emitter'
 import { onMounted, ref } from 'vue'
@@ -30,11 +30,13 @@ function getValue() {
   if (keyOrIndex.value !== '') {
     _name = `${_name}${keyOrIndex.value}`
   }
-  Api.getValue(store.chain, store.address, _name)
+  api
+    .getValue(store.chain, store.address, _name)
     .then((res) => {
+      console.log(res)
       emitter.emit('getValue', {
         name: `${prop.name}${keyOrIndex.value}`,
-        value: res.data,
+        value: res,
       })
     })
     .catch((err) => {

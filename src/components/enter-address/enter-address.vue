@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Api } from '@/net'
+import { api } from '@/common'
 import { ref, watch } from 'vue'
 import emitter from '@/emitter'
 import { useStore } from '@/store'
@@ -32,10 +32,12 @@ function getContractVariables() {
     return
   }
   loading.value = true
-  Api.getContracts(chain.value, address.value)
+
+  api
+    .getContracts(chain.value, address.value)
     .then((res) => {
       console.log(res)
-      emitter.emit('getContract', res.data)
+      emitter.emit('getContract', res)
     })
     .catch((err) => {
       notyf.error(err.message)
